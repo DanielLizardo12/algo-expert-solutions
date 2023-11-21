@@ -1,6 +1,7 @@
 package medium;
 
 import entity.RiverDown;
+import entity.RiverLeft;
 import entity.RiverRight;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +16,11 @@ public class RiverSizes {
 
   public static void main(String[] args) {
     int[][] matrix = {
-        {1, 0, 0, 1, 0},
-        {1, 0, 1, 0, 0},
-        {0, 0, 1, 0, 1},
-        {1, 0, 1, 0, 1},
-        {1, 0, 1, 1, 0}
+        {1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0},
+        {1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0},
+        {0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1},
+        {1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0},
+        {1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1}
     };
 
     System.out.println(solution(matrix));
@@ -38,6 +39,10 @@ public class RiverSizes {
           RiverRight riverRight = checkRightForRiver(matrix[i], j);
           riverSize += riverRight.getRiverSize();
           matrix[i] = riverRight.getMatrix();
+
+          RiverLeft riverLeft = checkLeftForRiver(matrix[i], j);
+          riverSize += riverLeft.getRiverSize();
+          matrix[i] = riverLeft.getMatrix();
 
           RiverDown riverDown = checkDownForRiver(matrix, j, i);
           matrix = riverDown.getMatrix();
@@ -67,6 +72,20 @@ public class RiverSizes {
     return new RiverRight(riverSize, matrix);
   }
 
+  public static RiverLeft checkLeftForRiver(int[] matrix, int currentIndex) {
+    int riverSize = 0;
+    for (int i = currentIndex - 1; i > 0; i--) {
+      if (matrix[i] == 1) {
+        matrix[i] = 0;
+        riverSize++;
+      } else {
+        return new RiverLeft(riverSize, matrix);
+      }
+    }
+
+    return new RiverLeft(riverSize, matrix);
+  }
+
   public static RiverDown checkDownForRiver(int[][] matrix, int currentIndex, int currentRow) {
     int riverSize = 0;
     for (int i = currentRow + 1; i < matrix.length; i++) {
@@ -79,6 +98,11 @@ public class RiverSizes {
 
         matrix[i] = riverRight.getMatrix();
         riverSize += riverRight.getRiverSize();
+
+        RiverLeft riverLeft = checkLeftForRiver(matrix[i], currentIndex);
+
+        matrix[i] = riverLeft.getMatrix();
+        riverSize += riverLeft.getRiverSize();
 
       } else {
         return new RiverDown(riverSize, matrix);
