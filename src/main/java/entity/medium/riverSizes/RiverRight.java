@@ -1,4 +1,4 @@
-package entity;
+package entity.medium.riverSizes;
 
 /**
  * RiverRight description.
@@ -7,11 +7,11 @@ package entity;
  * @version 21/11/2023
  */
 
-public class RiverLeft {
+public class RiverRight {
   private int riverSize;
   private int[] matrix;
 
-  public RiverLeft(int riverSize, int[] matrix) {
+  public RiverRight(int riverSize, int[] matrix) {
     this.riverSize = riverSize;
     this.matrix = matrix;
   }

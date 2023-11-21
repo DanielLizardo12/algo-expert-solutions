@@ -1,8 +1,8 @@
 package medium;
 
-import entity.RiverDown;
-import entity.RiverLeft;
-import entity.RiverRight;
+import entity.medium.riverSizes.RiverDown;
+import entity.medium.riverSizes.RiverLeft;
+import entity.medium.riverSizes.RiverRight;
 import java.util.ArrayList;
 import java.util.List;
 
